@@ -1,0 +1,146 @@
+@CHARSET "ISO-8859-1";
+
+.MSDList {
+	background-image: -webkit-linear-gradient(top, white 0%, #F2F2F2 100%);
+	border: 1px solid #ccc;
+	border-bottom-left-radius: 3px;
+	border-bottom-right-radius: 3px;
+	border-top-left-radius: 3px;
+	border-top-right-radius: 3px;
+	color: #333;
+	cursor: pointer;
+	font-family: Arial, sans-serif;
+	padding: 0px;
+	text-shadow: white 0px 1px 0px;
+	white-space: nowrap;
+}
+
+.MSDList:hover {
+	border: 1px solid #aaa;
+	background-image: -webkit-linear-gradient(top, #F2F2F2 0%, white 100%);
+}
+
+.MSDList,.MSDList_ListTable {
+	font-family: tahoma;
+	font-size: 12px;
+}
+
+.MSDList_InputSection {
+	float: left;
+	/*background: url(text-bg.gif) repeat-x;*/
+}
+
+.MSDList_ButtonSection {
+	float: left;
+	width: 30px;
+	/*background: url(text-bg.gif) repeat-x;*/
+}
+
+.MSDList_Label {
+	float: left;
+	padding-left: 5px;
+	padding-right: 5px;
+	overflow: hidden;
+	cursor: pointer;
+}
+
+.MSDList_DropDownButton {
+	border: none;
+	cursor: pointer;
+	background: url(down.gif) no-repeat;
+	background-position: center;
+	font-size: 14px;
+	padding: 0px;
+	margin: 0px;
+}
+
+.MSDList_DropDownButton:hover {
+	
+}
+
+.MSDList_List {
+	position: absolute;
+	border: 1px solid #bbb;
+	border-top: 0px;
+	overflow-y: auto;
+	overflow-x: hidden;
+	max-height: 250px;
+	background: white;
+	webkit-box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+	box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+}
+
+.MSDList_ListTable {
+	width: 100%;
+}
+
+.MSDList_ListTableHeader {
+	
+}
+
+.MSDList_ListTableBody {
+	
+}
+
+.MSDList_ListTableHeaderRow {
+	background: #eee;
+}
+
+.MSDList_ListTableHeaderRowCheckBoxCell {
+	
+}
+
+.MSDList_ListTableHeaderRowLabelCell {
+	
+}
+
+.MSDList_ListCheckBoxCell {
+	width: 16px;
+	padding: 2px;
+}
+
+.MSDList_ListTableHeaderFilterRow {
+	
+}
+
+.MSDList_ListTableHeaderFilterCell {
+	height: 25px;
+}
+
+.MSDList_ListFilterBox,.MSDList_ListFilterBox_Empty {
+	border: none;
+	font-family: verdana;
+	font-size: 11px;
+	padding: 3px;
+}
+
+.MSDList_ListFilterBox {
+	color: #333;
+}
+
+.MSDList_ListFilterBox_Empty {
+	color: #aaa;
+}
+
+.MSDList_ListLabelCell {
+	padding-left: 5px;
+	cursor: pointer;
+}
+
+.MSDList_ListCheckBox {
+	width: 15px;
+	height: 15px;
+	margin: 3px;
+}
+
+.MSDList_ListItemRow {
+	
+}
+
+.MSDList_ListItemRow:hover {
+	background: #bbb;
+}
+
+.MSDList_ListTableBody tr td {
+	
+}
