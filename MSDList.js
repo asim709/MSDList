@@ -281,12 +281,12 @@ function MSDList(container) {
 	this._containerNode.onclick = function(e) {
 		e = e || window.event;
 
-		if (event.stopPropagation) {
+		if (e.stopPropagation) {
 	        // W3C standard variant
-	        event.stopPropagation()
+	        e.stopPropagation()
 	    } else {
 	        // IE variant
-	        event.cancelBubble = true
+	        e.cancelBubble = true
 	    }
 	};
 
