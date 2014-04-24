@@ -17,12 +17,28 @@
  * 
  * Copyright (c) 2013 Asim Ishaq
  *
- * License: GPL v3 
+ * License: GPL v2 or later 
  */
 
+/*
+	The second parameter can be an object specifing the following properties:
+	{
+		filterVisible : true,
+		selectAllOption : true,
+		emptyMessage : '',
+		allSelectedMessage : '',
+		responsive:false,
+		width : 200,
+		height:24
+	}
+*/
 function MSDList(container) {
 
 	var _this = this;
+
+	var options = {};
+	if (arguments.length >= 2)
+		options = arguments[1];
 
 	// ====================================================================//
 	// ========================= PRIVATE PROPERTIES
@@ -35,10 +51,42 @@ function MSDList(container) {
 	this._height = 24;
 	this._rendered = false;
 	this._listVisible = false;
-	this._emptyMessage = '[Select]';
-	this._allSelectedMessage = '[All Selected]';
 	this._emptyFilterMessage = '[Type here to filter list]';
-	this._filterVisible = true;
+
+	if (typeof options.width != 'undefined')
+		this._width = options.width;
+	else
+		this._width = 200;
+
+	if (typeof options.height != 'undefined')
+		this._height = options.height;
+	else
+		this._height = 24;
+
+	if (typeof options.responsive != 'undefined')
+		this._responsive = options.responsive;
+	else
+		this._responsive = false;
+
+	if (typeof options.emptyMessage != 'undefined')
+		this._emptyMessage = options.emptyMessage;
+	else
+		this._emptyMessage = '[Select]';
+
+	if (typeof options.allSelectedMessage != 'undefined')
+		this._allSelectedMessage = options.allSelectedMessage;
+	else
+		this._allSelectedMessage = '[All Selected]';
+
+	if (typeof options.filterVisible != 'undefined')
+		this._filterVisible = options.filterVisible;
+	else
+		this._filterVisible = true;
+
+	if (typeof options.selectAllOption != 'undefined')
+		this._selectAllOption = options.selectAllOption;
+	else
+		this._selectAllOption = true;
 
 	// ====================================================================//
 	// ========================= CONSTRUCTOR
@@ -141,6 +189,9 @@ function MSDList(container) {
 	if (!this._filterVisible)
 		this._listTableHeaderFilterRowNode.style.display = 'none';
 
+	if (!this._selectAllOption)
+		this._listTableHeaderRowNode.style.display = 'none';
+
 	// ====================================================================//
 	// MODIFY PROTOTYPE OF OTHER OBJECTS
 	// ====================================================================//
@@ -220,20 +271,45 @@ function MSDList(container) {
 	// ATTACH EVENT HANDLERS
 	// ====================================================================//
 
-	this._dropDownButton.onclick = function() {
-		if (_this._listVisible) {
-			_this.hideList();
-		} else {
-			_this.showList();
-		}
+	/*If the list is open and mouse is cliked on anywhere else in document then
+	it must close*/
+
+	document.addEventListener("click",function (e) {	
+		_this.hideList();
+	});
+
+	this._containerNode.onclick = function(e) {
+		e = e || window.event;
+
+		if (event.stopPropagation) {
+	        // W3C standard variant
+	        event.stopPropagation()
+	    } else {
+	        // IE variant
+	        event.cancelBubble = true
+	    }
 	};
 
-	this._labelNode.onclick = function() {
-		if (_this._listVisible) {
+	this._dropDownButton.onclick = function(e) {
+
+		e = e || window.event;
+
+		if (_this._listVisible)
 			_this.hideList();
-		} else {
+		 else 
 			_this.showList();
-		}
+
+	};
+
+	this._labelNode.onclick = function(e) {
+
+		e = e || window.event;
+
+		if (_this._listVisible) 
+			_this.hideList();
+		else
+			_this.showList();
+
 	};
 
 	this._selectAllCheckBoxNode.onclick = function() {
@@ -243,9 +319,13 @@ function MSDList(container) {
 			_this.unselectAllItems();
 	};
 
-	this._listTableHeaderRowLabelCellNode.onclick = function() {
+	this._listTableHeaderRowLabelCellNode.onclick = function(e) {
+		
+		e = e || window.event;
+
 		this.parentNode.firstChild.firstChild.checked = !this.parentNode.firstChild.firstChild.checked;
 		_this._selectAllCheckBoxNode.onclick();
+
 	};
 
 	// Filter box events
@@ -273,7 +353,7 @@ function MSDList(container) {
 		_this.filterList();
 	};
 
-	// counter: user for z-Index. The counter will increase on new instance and
+	// counter: used for z-Index. The counter will increase on new instance and
 	// as well whenever layout is called for any instance
 	if (typeof MSDList._counter == 'undefined') {
 		MSDList._counter = 1;
@@ -367,12 +447,31 @@ MSDList.prototype.hideList = function() {
 	}
 };
 
+MSDList.prototype.isListVisible = function() {
+	return this._listVisible;
+};
+
 MSDList.prototype.setEmptyFilterMessage = function(message) {
 	this._emptyFilterMessage = message;
 };
 
 MSDList.prototype.getEmptyFilterMessage = function() {
 	return this._emptyFilterMessage;
+};
+
+MSDList.prototype.setSelectAllOptionVisible = function(visible) {
+	this._selectAllOption = visible;
+	if (this._selectAllOption) {
+		this._listTableHeaderRowNode.style.display = '';
+		this._layoutList();
+	} else {
+		this._listTableHeaderRowNode.style.display = 'none';
+		this._layoutList();
+	}
+};
+
+MSDList.prototype.isSelectAllOptionVisible = function() {
+	return this._selectAllOption;
 };
 
 MSDList.prototype.setFilterVisible = function(visible) {
@@ -402,9 +501,30 @@ MSDList.prototype.getFilterValue = function() {
 			: this._filterBoxNode.value;
 };
 
+MSDList.prototype.setResponsive = function(responsive) {
+	this._responsive = responsive;
+	this._layout();
+};
+
+MSDList.prototype.isResponsive = function() {
+	return this._responsive;
+};
+
 // ====================================================================//
 // METHODS
 // ====================================================================//
+
+//Check if this list element is within a form element then return that form obj
+MSDList.prototype.getParentFormElement = function() {
+	var node = this._containerNode.parentNode;
+	while (node != null) {
+		if (node.nodeName == 'FORM')
+			return node;
+		else
+			node = node.parentNode;
+	}
+	return null;
+};
 
 // Returns false if item is not added else true. Duplicate items are not added
 MSDList.prototype.addItem = function(id, label) {
@@ -564,6 +684,19 @@ MSDList.prototype.render = function() {
 		this._layout();
 		this._updateSelection();
 		this._rendered = true;
+
+		/* If the list is in a form element then reset button will reset the list as well.
+			respond to form reset event.*/
+		this._formElement = this.getParentFormElement();
+		if (this._formElement != null) {
+			var _thisRef = this;
+			this._formElement.addEventListener("reset", function (e) {
+				
+				e = e || window.event;
+
+				_thisRef.unselectAllItems();
+			});
+		}
 	}
 };
 
@@ -571,6 +704,10 @@ MSDList.prototype.render = function() {
 MSDList.prototype._layout = function() {
 
 	// Main Container Node
+	if (this.isResponsive()) 
+		if (typeof this._containerNode.parentNode != 'undefined') 
+			this._width = parseInt(this._containerNode.parentNode.clientWidth);
+
 	this._containerNode.setWidth(this._width);
 	this._containerNode.setHeight(this._height);
 

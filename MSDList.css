@@ -1,7 +1,7 @@
 @CHARSET "ISO-8859-1";
 
 .MSDList {
-	background-image: -webkit-linear-gradient(top, white 0%, #F2F2F2 100%);
+	background-image: -webkit-linear-gradient(top, rgb(255,255,255) 0%, rgb(242,242,242) 100%);
 	border: 1px solid #ccc;
 	border-bottom-left-radius: 3px;
 	border-bottom-right-radius: 3px;
@@ -13,11 +13,19 @@
 	padding: 0px;
 	text-shadow: white 0px 1px 0px;
 	white-space: nowrap;
+
+	/*Disble text selection*/
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
 }
 
 .MSDList:hover {
 	border: 1px solid #aaa;
-	background-image: -webkit-linear-gradient(top, #F2F2F2 0%, white 100%);
+	background-image: -webkit-linear-gradient(top, rgb(242,242,242) 0%, rgb(255,255,255) 100%);
 }
 
 .MSDList,.MSDList_ListTable {
