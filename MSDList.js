@@ -275,19 +275,46 @@ function MSDList(container) {
 	it must close*/
 
 	document.addEventListener("click",function (e) {	
-		_this.hideList();
+		if (_this._listVisible) {
+			
+			_this.hideList();
+
+			e = e || window.event;
+
+			if (e.stopPropagation) 
+	        	e.stopPropagation();
+			else if (e.preventDefault) 
+	    		e.preventDefault();
+			else 
+	        	e.cancelBubble = true;
+		}
+	});
+
+	document.addEventListener("touchend", function (e) {
+		if (_this._listVisible) {
+
+			_this.hideList();
+
+			e = e || window.event;
+
+			if (e.stopPropagation) 
+	        	e.stopPropagation();
+			else if (e.preventDefault) 
+	    		e.preventDefault();
+			else 
+	        	e.cancelBubble = true;
+		}
 	});
 
 	this._containerNode.onclick = function(e) {
 		e = e || window.event;
 
-		if (e.stopPropagation) {
-	        // W3C standard variant
-	        e.stopPropagation()
-	    } else {
-	        // IE variant
-	        e.cancelBubble = true
-	    }
+		if (e.stopPropagation) 
+	        e.stopPropagation();
+		else if (e.preventDefault) 
+	    	e.preventDefault();
+		else 
+	        e.cancelBubble = true;
 	};
 
 	this._dropDownButton.onclick = function(e) {
@@ -301,6 +328,19 @@ function MSDList(container) {
 
 	};
 
+	this._dropDownButton.ontouchend = function(e) {
+
+		e = e || window.event;
+
+		if (e.stopPropagation) 
+	        e.stopPropagation();
+		else if (e.preventDefault) 
+	    	e.preventDefault();
+		else 
+	        e.cancelBubble = true;
+
+	};
+
 	this._labelNode.onclick = function(e) {
 
 		e = e || window.event;
@@ -309,6 +349,19 @@ function MSDList(container) {
 			_this.hideList();
 		else
 			_this.showList();
+
+	};
+
+	this._labelNode.ontouchend = function(e) {
+
+		e = e || window.event;
+
+		if (e.stopPropagation) 
+	        e.stopPropagation();
+		else if (e.preventDefault) 
+	    	e.preventDefault();
+		else 
+	        e.cancelBubble = true;
 
 	};
 
@@ -564,13 +617,59 @@ MSDList.prototype.addItem = function(id, label) {
 	this._updateSelection();
 
 	var _this = this;
-	item.cbox.onclick = function() {
+	item.cbox.onclick = function(e) {
 		_this._updateSelection();
+
+		e = e || window.event;
+
+		if (e.stopPropagation) 
+	       	e.stopPropagation();
+		else if (e.preventDefault) 
+	    	e.preventDefault();
+		else 
+	       	e.cancelBubble = true;
 	};
 
-	item.td2.onclick = function() {
+	item.cbox.ontouchend = function(e) {
+
+		_this._updateSelection();
+
+		e = e || window.event;
+
+		if (e.stopPropagation) 
+	       	e.stopPropagation();
+		else if (e.preventDefault) 
+	    	e.preventDefault();
+		else 
+	       	e.cancelBubble = true;
+
+	};
+
+	item.td2.onclick = function(e) {
 		this.parentNode.firstChild.firstChild.checked = !this.parentNode.firstChild.firstChild.checked;
 		_this._updateSelection();
+
+		e = e || window.event;
+
+		if (e.stopPropagation) 
+	       	e.stopPropagation();
+		else if (e.preventDefault) 
+	    	e.preventDefault();
+		else 
+	      	e.cancelBubble = true;
+	};
+
+	item.td2.ontouchend = function(e) {
+		
+		e = e || window.event;
+
+		if (e.stopPropagation) 
+	       	e.stopPropagation();
+		else if (e.preventDefault) 
+	    	e.preventDefault();
+		else 
+	      	e.cancelBubble = true;
+
 	};
 
 	return true;
