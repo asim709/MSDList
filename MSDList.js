@@ -8,7 +8,7 @@
  * --------
  * Name		Asim Ishaq
  * Email 	asim709@gmail.com
- * Web	 	http://www.asimishaq.com
+ * Web	 	http://asimishaq.com
  * 
  * Detail Article for usage information:
  * -------------------------------------
