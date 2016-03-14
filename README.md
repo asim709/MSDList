@@ -14,7 +14,7 @@ Features:
 
 Usage
 -----
-http://asimishaq.com/resources/tools/multi-select-dropdown-list/
+http://asimishaq.com/filterable_multi_select_dropdown_list_javascript_component
 
 Author:
 -------
